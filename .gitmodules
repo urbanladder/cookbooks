@@ -4,3 +4,18 @@
 [submodule "apt"]
 	path = apt
 	url = git://github.com/opscode-cookbooks/apt.git
+[submodule "bluepill"]
+	path = bluepill
+	url = git://github.com/opscode-cookbooks/bluepill.git
+[submodule "build-essential"]
+	path = build-essential
+	url = git://github.com/opscode-cookbooks/build-essential.git
+[submodule "ohai"]
+	path = ohai
+	url = git://github.com/opscode-cookbooks/ohai.git
+[submodule "runit"]
+	path = runit
+	url = git://github.com/opscode-cookbooks/runit.git
+[submodule "yum"]
+	path = yum
+	url = git://github.com/opscode-cookbooks/yum.git
