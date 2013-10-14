@@ -1,3 +1,6 @@
 [submodule "nginx"]
 	path = nginx
 	url = git://github.com/opscode-cookbooks/nginx.git
+[submodule "apt"]
+	path = apt
+	url = git://github.com/opscode-cookbooks/apt.git
