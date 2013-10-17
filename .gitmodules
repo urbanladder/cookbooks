@@ -22,3 +22,6 @@
 [submodule "rsyslog"]
 	path = rsyslog
 	url = git://github.com/opscode-cookbooks/rsyslog.git
+[submodule "imagemagick"]
+	path = imagemagick
+	url = git://github.com/opscode-cookbooks/imagemagick.git
