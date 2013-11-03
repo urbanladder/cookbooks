@@ -1,0 +1,71 @@
+server {
+  listen 80;
+  server_name <%= @application[:domains].join(" ") %> <%= node[:hostname] %>;
+  access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>.access.log;
+
+  root <%= @application[:absolute_document_root] %>;
+
+  <% if @application[:nginx] && @application[:nginx][:client_max_body_size] %>
+    client_max_body_size <%= @application[:nginx][:client_max_body_size] %>;
+  <% end %>
+
+  location ~ ^/.+\.(jpg|jpeg|gif|png|ico|js|css|ttf|woff|eot|svg|txt|swf)$ {
+    # First attempt to serve request as file, then
+    # as directory, then fall back to index.html
+    try_files $uri =404;
+    expires max;
+  }
+
+  location / {
+    passenger_enabled on;
+  }
+
+  location /nginx_status {
+    stub_status on;
+    access_log off;
+    allow 127.0.0.1;
+    deny all;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  location = /500.html {
+    root <%= @application[:absolute_document_root] %>;
+  }
+}
+
+<% if @application[:ssl_support] %>
+server {
+  listen   443;
+  server_name <%= @application[:domains].join(" ") %> <%= node[:hostname] %>;
+  access_log <%= node[:nginx][:log_dir] %>/<%= @application[:domains].first %>-ssl.access.log;
+  
+  ssl on;
+  ssl_certificate /etc/nginx/ssl/<%= @application[:domains].first %>.crt;
+  ssl_certificate_key /etc/nginx/ssl/<%= @application[:domains].first %>.key;
+  <% if @application[:ssl_certificate_ca] -%>
+  ssl_client_certificate /etc/nginx/ssl/<%= @application[:domains].first %>.ca;
+  <% end -%>
+
+  root <%= @application[:absolute_document_root] %>;
+
+  <% if @application[:nginx] && @application[:nginx][:client_max_body_size] %>
+    client_max_body_size <%= @application[:nginx][:client_max_body_size] %>;
+  <% end %>
+
+  location ~ ^/.+\.(jpg|jpeg|gif|png|ico|js|css|ttf|woff|eot|svg|txt|swf)$ {
+    # First attempt to serve request as file, then
+    # as directory, then fall back to index.html
+    try_files $uri =404;
+    expires max;
+  }
+
+  location / {
+    passenger_enabled on;
+  }
+
+  error_page 500 502 503 504 /500.html;
+  location = /500.html {
+    root <%= @application[:absolute_document_root] %>;
+  }
+}
+<% end %>

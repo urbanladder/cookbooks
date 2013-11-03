@@ -168,6 +168,12 @@ define :opsworks_deploy do
         deploy deploy
       end
 
+    when 'nginx_passenger'
+      passenger_nginx_web_app do
+        application application
+        deploy deploy
+      end
+
     else
       raise "Unsupport Rails stack"
     end
