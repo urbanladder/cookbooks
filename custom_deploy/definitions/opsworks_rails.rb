@@ -2,7 +2,9 @@ define :opsworks_rails do
   deploy = params[:deploy_data]
   application = params[:app]
 
-  include_recipe node[:opsworks][:custom_rails_stack][:recipe]
+  unless node[:opsworks][:custom_rails_stack][:recipe].empty?
+    include_recipe node[:opsworks][:custom_rails_stack][:recipe]
+  end
 
   # write out memcached.yml
   template "#{deploy[:deploy_to]}/shared/config/memcached.yml" do

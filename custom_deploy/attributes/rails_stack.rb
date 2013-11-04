@@ -11,7 +11,7 @@ when "nginx_unicorn"
   default[:opsworks][:custom_rails_stack][:service] = 'unicorn'
   default[:opsworks][:custom_rails_stack][:restart_command] = '../../shared/scripts/unicorn clean-restart'
 when "nginx_passenger"
-  default[:opsworks][:custom_rails_stack][:recipe] = "nginx::passenger"
+  default[:opsworks][:custom_rails_stack][:recipe] = ""
   default[:opsworks][:custom_rails_stack][:needs_reload] = true
   default[:opsworks][:custom_rails_stack][:service] = 'nginx'
   default[:opsworks][:custom_rails_stack][:restart_command] = 'touch tmp/restart.txt'
