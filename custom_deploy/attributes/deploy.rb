@@ -1,5 +1,5 @@
-include_attribute 'deploy::logrotate'
-include_attribute 'deploy::rails_stack'
+include_attribute 'custom_deploy::logrotate'
+include_attribute 'custom_deploy::rails_stack'
 
 default[:opsworks][:deploy_user][:shell] = '/bin/bash'
 default[:opsworks][:deploy_user][:user] = 'deploy'

@@ -1,6 +1,6 @@
 require 'minitest/spec'
 
-describe_recipe 'deploy::default' do
+describe_recipe 'custom_deploy::default' do
   include MiniTest::Chef::Resources
   include MiniTest::Chef::Assertions
 
