@@ -74,7 +74,7 @@ define :opsworks_deploy do
       action deploy[:action]
 
       if deploy[:application_type] == 'rails'
-        restart_command "sleep #{deploy[:sleep_before_restart]} && #{node[:opsworks][:rails_stack][:restart_command]}"
+        restart_command "sleep #{deploy[:sleep_before_restart]} && #{node[:opsworks][:custom_rails_stack][:restart_command]}"
       end
 
       case deploy[:scm][:scm_type].to_s
@@ -154,7 +154,7 @@ define :opsworks_deploy do
   end
 
   if deploy[:application_type] == 'rails' && node[:opsworks][:instance][:layers].include?('rails-app')
-    case node[:opsworks][:rails_stack][:name]
+    case node[:opsworks][:custom_rails_stack][:name]
 
     when 'apache_passenger'
       passenger_web_app do

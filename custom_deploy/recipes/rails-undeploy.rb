@@ -10,10 +10,10 @@ node[:deploy].each do |application, deploy|
     next
   end
 
-  case node[:opsworks][:rails_stack][:name]
+  case node[:opsworks][:custom_rails_stack][:name]
   when 'apache_passenger'
-    if node[:opsworks][:rails_stack][:service]
-      include_recipe "#{node[:opsworks][:rails_stack][:service]}::service"
+    if node[:opsworks][:custom_rails_stack][:service]
+      include_recipe "#{node[:opsworks][:custom_rails_stack][:service]}::service"
     end
 
     link "#{node[:apache][:dir]}/sites-enabled/#{application}.conf" do
@@ -21,7 +21,7 @@ node[:deploy].each do |application, deploy|
       only_if do
         ::File.exists?("#{node[:apache][:dir]}/sites-enabled/#{application}.conf")
       end
-      notifies :restart, "service[#{node[:opsworks][:rails_stack][:service]}]"
+      notifies :restart, "service[#{node[:opsworks][:custom_rails_stack][:service]}]"
     end
 
     file "#{node[:apache][:dir]}/sites-available/#{application}.conf" do
@@ -29,7 +29,7 @@ node[:deploy].each do |application, deploy|
       only_if do
         ::File.exists?("#{node[:apache][:dir]}/sites-available/#{application}.conf")
       end
-      notifies :restart, "service[#{node[:opsworks][:rails_stack][:service]}]"
+      notifies :restart, "service[#{node[:opsworks][:custom_rails_stack][:service]}]"
     end
 
   when 'nginx_unicorn'
