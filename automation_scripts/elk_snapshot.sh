@@ -11,7 +11,7 @@ s3_bucket=''
 s3_region=''
 aws_access_key=''
 aws_secret_key=''
-Host="http://$username:$password/$elk_host"
+Host="http://$username:$password@$elk_host"
 
 day=1
 repo_status=$(curl -s -o /dev/null -I -w "%{http_code}" -XGET $Host/_snapshot/$elk_repo/_all)
@@ -42,7 +42,7 @@ fi
 
 # Check for snapshot
 index_date=$(date --date="$day days ago" +%Y.%m.%d)
-snapshot_status=$(curl -s -o /dev/null -I -w "%{http_code}" -XGET $Host/_snapshot/$elk_repo/snapshot_$name)
+snapshot_status=$(curl -s -o /dev/null -I -w "%{http_code}" -XGET $Host/_snapshot/$elk_repo/snapshot_$index_date)
 if [ $snapshot_status = 200 ]; then
   echo "  The snapshot for the index logstash-$index_date already exists"
   exit 0
